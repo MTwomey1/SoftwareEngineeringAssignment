@@ -11,18 +11,27 @@ public class User implements Serializable {
 	private String lastName;
 	private String username;
 	private String password;
+	private UserAccessPriveledge accessPriveledge;
 	
 	
 	public User(int userId, String firstName, String lastName,
-			String username, String password) {
-		
+			String username, String password, UserAccessPriveledge accessPriveledge) {
 		setId(userId);
 		setFirstName(firstName);
 		setLastName(lastName);
 		setUsername(username);
 		setPassword(password);
+		setAccessPriveledge(accessPriveledge);
 	}
 	
+	public UserAccessPriveledge getAccessPriveledge() {
+		return accessPriveledge;
+	}
+
+	public void setAccessPriveledge(UserAccessPriveledge accessPriveledge) {
+		this.accessPriveledge = accessPriveledge;
+	}
+
 	public int getId() {
 		return id;
 	}
