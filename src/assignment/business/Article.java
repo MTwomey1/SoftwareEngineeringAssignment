@@ -2,13 +2,13 @@ package assignment.business;
 
 public class Article {
 	
-	private String id;
+	private int id;
 	private String title;
 	private String contents;
 	private String dateCreated;
 	
 	
-	public Article(String id, String title, String contents, String dateCreated) {
+	public Article(int id, String title, String contents, String dateCreated) {
 		setId(id);
 		setTitle(title);
 		setContents(contents);
@@ -16,10 +16,10 @@ public class Article {
 	}
 	
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getTitle() {
