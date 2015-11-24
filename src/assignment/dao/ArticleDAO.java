@@ -9,9 +9,9 @@ import java.sql.Connection;
 import assignment.business.Article;
 import assignment.exceptions.DaoException;
 
-public class ArticleDAO extends Dao {
+public class ArticleDao extends Dao {
 	
-	public Article getArticle(String id) throws DaoException {
+	public Article getArticle(int id) throws DaoException {
 		Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -21,7 +21,7 @@ public class ArticleDAO extends Dao {
         	connection = this.getConnection();
         	
         	preparedStatement = connection.prepareStatement(ArticleDAOSchema.GET_ARTICLE);
-        	preparedStatement.setString(1, id);
+        	preparedStatement.setInt(1, id);
         	
         	resultSet = preparedStatement.executeQuery();
         	while (resultSet.next()) {

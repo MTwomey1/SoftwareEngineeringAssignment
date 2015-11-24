@@ -6,6 +6,6 @@ import assignment.business.Article;
 public interface ServiceRequest {
 	public User login(String username, String password);
 	public void addArticle(Article article);
-	public void getArticle(String id);
+	public Article getArticle(String id);
 	
 }

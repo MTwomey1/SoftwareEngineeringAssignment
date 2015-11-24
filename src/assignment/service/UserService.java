@@ -2,6 +2,7 @@ package assignment.service;
 
 import assignment.business.Article;
 import assignment.business.User;
+import assignment.dao.ArticleDao;
 import assignment.dao.UserDao;
 import assignment.exceptions.DaoException;
 
@@ -9,6 +10,7 @@ import assignment.exceptions.DaoException;
 public class UserService implements ServiceRequest {
 
 	UserDao userDao = new UserDao();
+	ArticleDao articleDao = new ArticleDao();
 	
 	public UserService() {
 	}
@@ -34,12 +36,14 @@ public class UserService implements ServiceRequest {
 
 
 	@Override
-	public void getArticle(String id) {
-		// TODO Auto-generated method stub
+	public Article getArticle(String id) {
+		Article article = null;
 		
+		try {
+			article = articleDao.getArticle(1);
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+		return article;
 	}
-	
-	
-
-	
 }
