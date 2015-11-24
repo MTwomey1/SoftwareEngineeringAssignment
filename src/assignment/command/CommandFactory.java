@@ -1,58 +1,50 @@
 package assignment.command;
 
-import assignment.exceptions.CommandCreationException;
 
-public class CommandFactory {
+public class CommandFactory extends AbstractCommandFactory {
 
     private static CommandFactory factory = null;
 
     private CommandFactory() {
     }
 
-    
     /**
-     * Get an instance of the CommandFactory
-     * @return The singleton CommandFactory object
-     */
-    public synchronized static CommandFactory getInstance() {
-        if (factory == null) {   
+     * Returns a sharedInstance of CommandFactory
+     * @return The sharedInstance.
+     **/
+	public static synchronized AbstractCommandFactory getSharedInstance() {
+		if (factory == null) {
+			factory = new CommandFactory();
+		}
+		return factory;
+	}
+	
+	
+	/**
+	 * Creates a command.
+	 * @param commandType The type of command to create.
+	 * 					  @see CommandType for the list of
+	 * 					  commands to create.
+	 **/
+	@Override
+	public Command createCommand(CommandType commandType) {
+		switch (commandType) {
+		case LOGIN_COMMAND:
+			return createLoginCommand();
+		case ADD_ARTICLE_COMMAND:
+			return createAddArticleCommand();
+		}
+		return null;
+	}
+	
+	
+	private Command createLoginCommand() {
+		return new LoginUserCommand();
+	}
+	
+	private Command createAddArticleCommand() {
+		return new AddArticleCommand();
+	}
 
-            factory = new CommandFactory();
-        }
-        return factory;
-    }
-
-    /**
-     * 
-     * @param commandStr Identifier for the exact Command object required
-     * @return The specific Command object requested
-     * @throws CommandCreationException 
-     */
-    public synchronized Command createCommand(String commandStr) throws CommandCreationException {
-
-    	Command command = null;
-    	String packageName = "assignment.command.";    	
-    	
-        try {
-            commandStr = packageName + commandStr + "Command";
-            
-            Class<?> theClass = Class.forName(commandStr);
-            Object theObject = theClass.newInstance();
-            
-            command = (Command) theObject;
-            
-        } catch (InstantiationException e) {
-            throw new CommandCreationException("CommandFactory: " + e);
-        } catch (IllegalAccessException e) {
-            throw new CommandCreationException("CommandFactory: " + e);
-        } catch (ClassNotFoundException e) {
-            throw new CommandCreationException("CommandFactory: " + e);
-        }
-
-    	//Return the instantiated Command object to the calling code...
-    	return command;		// may be null
-
-    }
-    
 }
 

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import assignment.command.Command;
 import assignment.command.CommandFactory;
+import assignment.command.CommandType;
 import assignment.exceptions.CommandCreationException;
 
 
@@ -21,6 +22,7 @@ import assignment.exceptions.CommandCreationException;
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String LOGIN_ACTION = "LoginUser";
+	private static final String ADD_ARTICLE = "AddArticle";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -49,45 +51,41 @@ public class FrontController extends HttpServlet {
 	 * Common method to process all client requests (GET and POST)
 	 */
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
-
 		String forwardToJsp = null;		
-		String action = request.getParameter("action");
-		
-		
-		/*
-		 * NOTE: AS A SPCIAL CASE, THIS SECTION OF THE CODE DEALS WITH CHECKING LOGIN DETAILS...
-		 */
+		String commandToCreate = request.getParameter("action");
+		CommandType commandType = null;
 		
 		//Check if this is not a login request...
-		if ( !action.equalsIgnoreCase(LOGIN_ACTION) ){
-
+		if (!commandToCreate.equalsIgnoreCase(LOGIN_ACTION) ){
 			//If not a login request then need to check that user is  
 			//logged in before processing ANY requests.
-			
-			//Check to see if the session id coming from the client matches the id stored at login...
-			HttpSession session = request.getSession();
-
-			//If user not logged in...
-			if (isUserLoggedIn(session)){
+		
+			if (!isUserLoggedIn(request.getSession())){
 				forwardToJsp = "/loginFailure.jsp";
 				forwardToPage(request, response, forwardToJsp);
 				return;
-			}			
-		}			
+			}
+			
+			commandType = CommandType.LOGIN_COMMAND;
+		} else if (commandToCreate.equalsIgnoreCase(ADD_ARTICLE)) {
+			commandType = CommandType.ADD_ARTICLE_COMMAND;
+		}
 		
+		CommandFactory commandFactory = (CommandFactory)CommandFactory.getSharedInstance();
+		Command command = commandFactory.createCommand(commandType);
 		
 		// Now we can process whatever the request is...
 		// We just create a Command object to handle the request...
-		CommandFactory factory = CommandFactory.getInstance();
-		Command command = null;
-		
-		try {
-			command = factory.createCommand(action);
-			forwardToJsp = command.execute(request, response);
-		} catch (CommandCreationException e) {			
-			e.printStackTrace();
-			forwardToJsp = "/errorPage.jsp";
-		}		
+//		CommandFactory factory = CommandFactory.getInstance();
+//		Command command = null;
+//		
+//		try {
+//			command = factory.createCommand(action);
+//			forwardToJsp = command.execute(request, response);
+//		} catch (CommandCreationException e) {			
+//			e.printStackTrace();
+//			forwardToJsp = "/errorPage.jsp";
+//		}		
 		
 		forwardToPage(request, response, forwardToJsp);
 	}
