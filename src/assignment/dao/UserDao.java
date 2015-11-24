@@ -8,86 +8,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 import assignment.business.User;
+import assignment.business.UserAccessPriveledge;
 import assignment.exceptions.DaoException;
 
 
 public class UserDao extends Dao {
 	
-	
-	public ArrayList<User> getAllUsers() throws DaoException {
-		Connection conn = null;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
 		
-		ArrayList<User> users = new ArrayList<>();
-		
-		try {
-			conn = this.getConnection();
-			String query = "SELECT * FROM User";
-			statement = conn.prepareStatement(query);
-			
-			resultSet = statement.executeQuery();
-			
-			while (resultSet.next()) {
-				int userID = resultSet.getInt("ID");
-                String username = resultSet.getString("USERNAME");
-                String password = resultSet.getString("PASSWORD");
-                String lastname = resultSet.getString("LAST_NAME");
-                String firstname = resultSet.getString("FIRST_NAME");
-                users.add(new User(userID, firstname, lastname, username, password));
-			}	
-		} catch (SQLException e) {
-			throw new DaoException("findUserByUsernamePassword " + e.getMessage());
-		} finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (conn != null) {
-                    freeConnection(conn);
-                }
-            } catch (SQLException e) {
-                throw new DaoException("findUserByUsernamePassword" + e.getMessage());
-            }
-        }
-		return users;
-	}
-	
-	
-	
-	
-    public User findUserByUsernamePassword(String uname, String pword) throws DaoException {
+	/**
+	 * Retrieves a user from the database with the given user name and password.
+	 * @param username The user name.
+	 * @param password The password for the user.
+	 * @throws DaoException.
+	 * @*/
+    public User findUserByUsernamePassword(String username, String password) throws DaoException {
 
         Connection con = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        User u = null;
+        ResultSet resultSet = null;
+        User user = null;
         try {
             con = this.getConnection();
             
             String query = "SELECT * FROM USER WHERE USERNAME = ? AND PASSWORD = ?";
             ps = con.prepareStatement(query);
-            ps.setString(1, uname);
-            ps.setString(2, pword);
+            ps.setString(1, username);
+            ps.setString(2, password);
             
-            rs = ps.executeQuery();
-            if (rs.next()) {
-            	int userId = rs.getInt("ID");
-                String username = rs.getString("USERNAME");
-                String password = rs.getString("PASSWORD");
-                String lastname = rs.getString("LAST_NAME");
-                String firstname = rs.getString("FIRST_NAME");
-                u = new User(userId, firstname, lastname, username, password);
+            resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+            	int userId = resultSet.getInt("ID");
+                String _username = resultSet.getString("USERNAME");
+                String _password = resultSet.getString("PASSWORD");
+                String lastname = resultSet.getString("LAST_NAME");
+                String firstname = resultSet.getString("FIRST_NAME");
+                user = new User(userId, firstname, lastname, _username, _password, UserAccessPriveledge.GUEST);
             }
         } catch (SQLException e) {
             throw new DaoException("findUserByUsernamePassword " + e.getMessage());
         } finally {
             try {
-                if (rs != null) {
-                    rs.close();
+                if (resultSet != null) {
+                    resultSet.close();
                 }
                 if (ps != null) {
                     ps.close();
@@ -99,7 +61,7 @@ public class UserDao extends Dao {
                 throw new DaoException("findUserByUsernamePassword" + e.getMessage());
             }
         }
-        return u;     // u may be null 
+        return user;  
     }
    
 }

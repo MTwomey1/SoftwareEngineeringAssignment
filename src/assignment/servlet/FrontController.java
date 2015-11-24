@@ -27,7 +27,6 @@ public class FrontController extends HttpServlet {
      */
     public FrontController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -69,7 +68,7 @@ public class FrontController extends HttpServlet {
 			HttpSession session = request.getSession();
 
 			//If user not logged in...
-			if ( session.getId() != session.getAttribute("loggedSessionId") ){
+			if (isUserLoggedIn(session)){
 				forwardToJsp = "/loginFailure.jsp";
 				forwardToPage(request, response, forwardToJsp);
 				return;
@@ -77,8 +76,8 @@ public class FrontController extends HttpServlet {
 		}			
 		
 		
-		//Now we can process whatever the request is...
-		//We just create a Command object to handle the request...
+		// Now we can process whatever the request is...
+		// We just create a Command object to handle the request...
 		CommandFactory factory = CommandFactory.getInstance();
 		Command command = null;
 		
@@ -92,6 +91,22 @@ public class FrontController extends HttpServlet {
 		
 		forwardToPage(request, response, forwardToJsp);
 	}
+	
+		
+	
+	/**
+	 * Checks to see if the user is already logged in.
+	 * @param session The session used to check if the user is logged in
+	 * @return True: User is logged in. False: User is not logged in.
+	 * */
+	private boolean isUserLoggedIn(HttpSession session) {
+		if (session.getId() != session.getAttribute("loggedSessionId")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 	
 	/**

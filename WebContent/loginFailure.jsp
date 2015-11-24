@@ -9,10 +9,10 @@
 </head>
 
 <body>
-	Servlet forwarded to me... loginFailure.jsp
+	<h2>Login error</h2>
+	<h2>There was an error trying to log you in</h2>
 	<br/>
 	<br/>	
-	<a href="login.html">Return to Login page...</a>
+	<a href="login.html">Try again.</a>
 </body>
-
 </html>

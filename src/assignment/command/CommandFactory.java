@@ -31,7 +31,7 @@ public class CommandFactory {
     public synchronized Command createCommand(String commandStr) throws CommandCreationException {
 
     	Command command = null;
-    	String packageName = "com.example.command.";    	
+    	String packageName = "assignment.command.";    	
     	
         try {
             commandStr = packageName + commandStr + "Command";

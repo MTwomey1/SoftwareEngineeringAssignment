@@ -1,41 +1,45 @@
 package assignment.service;
 
-import java.util.ArrayList;
-
+import assignment.business.Article;
 import assignment.business.User;
 import assignment.dao.UserDao;
 import assignment.exceptions.DaoException;
 
 
-public class UserService {
+public class UserService implements ServiceRequest {
 
-	UserDao dao = new UserDao();
+	UserDao userDao = new UserDao();
 	
 	public UserService() {
 	}
 	
-	public User login(String username, String password){
+	
+	public User login(String username, String password) {
+		User user = null;
 		
-		User u = null;
 		try {			
-			u = dao.findUserByUsernamePassword(username, password);
+			user = userDao.findUserByUsernamePassword(username, password);
 		} 
 		catch (DaoException e) {
 			e.printStackTrace();
 		}
-		return u;	
+		return user;	
 	}
-	
-	
-	public ArrayList<User> getAllUsers() {
-		ArrayList<User> users = new ArrayList<>();
+
+
+	@Override
+	public void addArticle(Article article) {
 		
-		try {
-			users = dao.getAllUsers();
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
-		return users;
 	}
+
+
+	@Override
+	public void getArticle(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
 	
 }

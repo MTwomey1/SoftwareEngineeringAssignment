@@ -11,7 +11,7 @@
 </head>
 
 <body>
-	Servlet forwarded to me... loginSuccess.jsp
+	You have been logged in successfully.
 	
 	<br/><br/>
 	
