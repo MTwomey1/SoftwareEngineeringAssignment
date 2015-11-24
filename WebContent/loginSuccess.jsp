@@ -21,14 +21,15 @@
 	
 	<br/><br/>
 	
-	<form action="FrontController" method="post">
-	     <input type="hidden" name="action" value="ListUsers" />
-         <input type="submit" value="List Users" />
-    </form>
     <form action="FrontController" method="post">
 	     <input type="hidden" name="action" value="ViewUserProfile" />
          <input type="submit" value="View My Profile" />
-    </form>      
+    </form> 
+    
+    <form action="FrontController" method="post">
+    	<input type = "hidden" name="action" value="AddArticle"/>
+    	<input type = "submit" value="Add Article"/>
+    </form>    
 		
 </body>
 
