@@ -98,7 +98,7 @@ public class FrontController extends HttpServlet {
 	 * Forward to server to the supplied page
 	 */
 	private void forwardToPage(HttpServletRequest request, HttpServletResponse response, String page){
-		
+		System.out.println("Page" + page);
 		//Get the request dispatcher object and forward the request to the appropriate JSP page...
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
 		try {

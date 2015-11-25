@@ -31,18 +31,21 @@ table {
   </tr>
 
 <% 
-	ArrayList<Article> articles = 
-		(ArrayList<Article>)request.getSession().getAttribute("articles");
-
-	for(int i = 0; i < articles.size(); i++) {
+	Object object = request.getSession().getAttribute("articles");
+	Article[] articles = null;
+	
+	if (object instanceof Article[]) {
+		articles = (Article[])object;	
+	}
+	
+	for(int i = 0; i < articles.length; i++) {
 		%>
 		<tr>
-			<td><%= articles.get(i).getTitle() %> </td>
-			<td><%= articles.get(i).getContents()%></td>
-			<td><%= articles.get(i).getDateCreated()%></td>
+			<td><%= articles[i].getTitle() %> </td>
+			<td><%= articles[i].getContents()%></td>
+			<td><%= articles[i].getDateCreated()%></td>
 		</tr>
 		<%
-		
 	}
 %>
 	

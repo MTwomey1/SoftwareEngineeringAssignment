@@ -27,8 +27,8 @@
     </form> 
     
     <form action="FrontController" method="post">
-    	<input type = "hidden" name="action" value="AddArticle"/>
-    	<input type = "submit" value="Add Article"/>
+    	<input type = "hidden" name="action" value="GetArticle"/>
+    	<input type = "submit" value="All Articles"/>
     </form>    
 		
 </body>
