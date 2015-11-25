@@ -5,12 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import assignment.dao.ArticleDao;
 
-public class AddArticleCommand implements Command {
-	
+public class GetArticleCommand implements Command {
+
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		return "";
+		ArticleDao articleDao = new ArticleDao();
+		return null;
 	}
-	
-
+		
 }

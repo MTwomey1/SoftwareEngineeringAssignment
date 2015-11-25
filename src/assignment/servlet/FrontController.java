@@ -23,6 +23,7 @@ public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String LOGIN_ACTION = "LoginUser";
 	private static final String ADD_ARTICLE = "AddArticle";
+	private static final String GET_ARTICLE = "GetArticle";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -69,24 +70,14 @@ public class FrontController extends HttpServlet {
 			commandType = CommandType.LOGIN_COMMAND;
 		} else if (commandToCreate.equalsIgnoreCase(ADD_ARTICLE)) {
 			commandType = CommandType.ADD_ARTICLE_COMMAND;
+		} else if (commandToCreate.equalsIgnoreCase(GET_ARTICLE)) {
+			commandType = CommandType.GET_ARTICLE_COMMAND;
 		}
 		
 		CommandFactory commandFactory = (CommandFactory)CommandFactory.getSharedInstance();
 		Command command = commandFactory.createCommand(commandType);
 		
-		// Now we can process whatever the request is...
-		// We just create a Command object to handle the request...
-//		CommandFactory factory = CommandFactory.getInstance();
-//		Command command = null;
-//		
-//		try {
-//			command = factory.createCommand(action);
-//			forwardToJsp = command.execute(request, response);
-//		} catch (CommandCreationException e) {			
-//			e.printStackTrace();
-//			forwardToJsp = "/errorPage.jsp";
-//		}		
-		
+		forwardToJsp = command.execute(request, response);
 		forwardToPage(request, response, forwardToJsp);
 	}
 	
