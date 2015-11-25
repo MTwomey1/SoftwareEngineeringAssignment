@@ -6,5 +6,4 @@ package assignment.command;
  */
 public abstract class AbstractCommandFactory {
 	public abstract Command createCommand(CommandType commandType);
-	public abstract AbstractCommandFactory getSharedInstance();
 }

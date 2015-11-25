@@ -21,8 +21,8 @@ public class LoginUserCommand implements Command {
 
 		//Check we have a username and password...
 		if (username != null && password != null){
-
-			//Make call to the 'Model' using the UserServive class to login...
+			
+			// Make call to the 'Model' using the UserServive class to login...
 			User userLoggingIn = userService.login(username, password);
 
 			if (userLoggingIn != null){

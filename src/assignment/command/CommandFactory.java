@@ -3,7 +3,7 @@ package assignment.command;
 
 public class CommandFactory extends AbstractCommandFactory {
 
-    private static CommandFactory factory = null;
+    protected static CommandFactory factory = null;
 
     private CommandFactory() {
     }
@@ -30,11 +30,17 @@ public class CommandFactory extends AbstractCommandFactory {
 	public Command createCommand(CommandType commandType) {
 		switch (commandType) {
 		case LOGIN_COMMAND:
+			System.out.println("Login Command");
 			return createLoginCommand();
 		case ADD_ARTICLE_COMMAND:
+			System.out.println("Add article Command");
 			return createAddArticleCommand();
+		case GET_ARTICLE_COMMAND:
+			System.out.println("Get article Command");
+			return createGetAllArticlesCommand();
+		default:
+			return null;
 		}
-		return null;
 	}
 	
 	
@@ -44,6 +50,10 @@ public class CommandFactory extends AbstractCommandFactory {
 	
 	private Command createAddArticleCommand() {
 		return new AddArticleCommand();
+	}
+	
+	private Command createGetAllArticlesCommand() {
+		return new GetAllArticleCommand();
 	}
 
 }

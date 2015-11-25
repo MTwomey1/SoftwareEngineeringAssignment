@@ -56,17 +56,7 @@ public class FrontController extends HttpServlet {
 		String commandToCreate = request.getParameter("action");
 		CommandType commandType = null;
 		
-		//Check if this is not a login request...
-		if (!commandToCreate.equalsIgnoreCase(LOGIN_ACTION) ){
-			//If not a login request then need to check that user is  
-			//logged in before processing ANY requests.
-		
-			if (!isUserLoggedIn(request.getSession())){
-				forwardToJsp = "/loginFailure.jsp";
-				forwardToPage(request, response, forwardToJsp);
-				return;
-			}
-			
+		if (commandToCreate.equalsIgnoreCase(LOGIN_ACTION) ){
 			commandType = CommandType.LOGIN_COMMAND;
 		} else if (commandToCreate.equalsIgnoreCase(ADD_ARTICLE)) {
 			commandType = CommandType.ADD_ARTICLE_COMMAND;
@@ -74,13 +64,19 @@ public class FrontController extends HttpServlet {
 			commandType = CommandType.GET_ARTICLE_COMMAND;
 		}
 		
+		System.out.println("CommandType is: " + commandType);
+		
 		CommandFactory commandFactory = (CommandFactory)CommandFactory.getSharedInstance();
 		Command command = commandFactory.createCommand(commandType);
-		
 		forwardToJsp = command.execute(request, response);
 		forwardToPage(request, response, forwardToJsp);
 	}
 	
+//	if (!isUserLoggedIn(request.getSession())){
+//		forwardToJsp = "/loginFailure.jsp";
+//		forwardToPage(request, response, forwardToJsp);
+//		return;
+//	}
 		
 	
 	/**
