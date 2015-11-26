@@ -9,7 +9,7 @@ public class AddArticleCommand implements Command {
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		return "";
+		return "/addArticle.jsp";
 	}
 	
 
