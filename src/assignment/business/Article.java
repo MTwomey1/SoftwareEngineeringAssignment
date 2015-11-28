@@ -8,11 +8,17 @@ public class Article {
 	private String dateCreated;
 	
 	
-	public Article(int id, String title, String contents, String dateCreated) {
+	public Article(String title, String contents, String dateCreated) {
 		setId(id);
 		setTitle(title);
 		setContents(contents);
 		setDateCreated(dateCreated);
+	}
+	
+	
+	public Article(int id, String title, String contents, String dateCreated) {
+		this(title, contents, dateCreated);
+		setId(id);
 	}
 	
 	
