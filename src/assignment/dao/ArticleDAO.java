@@ -4,10 +4,8 @@ package assignment.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Connection;
-
 import assignment.business.Article;
 import assignment.exceptions.DaoException;
 
@@ -17,27 +15,22 @@ public class ArticleDao extends Dao {
 	public void addArticle(Article article) throws DaoException {
 		Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         
         try {
         	connection = this.getConnection();
         	preparedStatement = connection.prepareStatement(ArticleDAOSchema.ADD_ARTICLE);
         	
+        	preparedStatement.setString(1, article.getTitle());
+        	preparedStatement.setString(2, article.getContents());
+        	preparedStatement.setString(3, article.getDateCreated());
         	
-        	preparedStatement.setString(2, article.getTitle());
-        	preparedStatement.setString(3, article.getContents());
-        	preparedStatement.setString(4, article.getDateCreated());
-        	
-        	resultSet = preparedStatement.executeQuery();
+        	preparedStatement.executeUpdate();
         	
         } catch (SQLException e) {
         	e.printStackTrace();
         } finally {
         	try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (preparedStatement != null) {
+        		if (preparedStatement != null) {
                     preparedStatement.close();
                 }
                 if (connection != null) {
@@ -49,6 +42,12 @@ public class ArticleDao extends Dao {
 		}
 	}
 	
+	/**
+	 * Gets an article from the database according to its id.
+	 * 
+	 * @param id The of the article
+	 * @return The article.
+	 * */
 	public Article getArticle(int id) throws DaoException {
 		Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -134,6 +133,6 @@ public class ArticleDao extends Dao {
 	private final class ArticleDAOSchema {
 		public final static String GET_ARTICLE = "SELECT * FROM Article WHERE id = ?";
 		public final static String GET_ALL_ARTICLES = "SELECT * FROM Article";
-		public final static String ADD_ARTICLE = "INSERT INTO Article VALUES(?, ?, ?, ?)";
+		public final static String ADD_ARTICLE = "INSERT INTO Article VALUES(DEFAULT, ?, ?, ?)";
 	}
 }

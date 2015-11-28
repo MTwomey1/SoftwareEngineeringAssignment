@@ -32,7 +32,12 @@ table {
 
 <body>
 
-
+<table style="width:50%">
+<tr>
+    <th>Title</th>
+    <th>Content</th> 
+    <th>Date</th>
+  </tr>
 <% 
 	Object object = request.getSession().getAttribute("articles");
 	Article[] articles = null;
@@ -44,9 +49,9 @@ table {
 	for(int i = 0; i < articles.length; i++) {
 		%>
 		<tr>
-			<td><%= articles[i].getTitle() %> </td>
-			<td><%= articles[i].getContents()%></td>
-			<td><%= articles[i].getDateCreated()%></td>
+			<td><%= articles[i].getTitle()  %> </td>
+			<td><%= articles[i].getContents() %></td>
+			<td><%= articles[i].getDateCreated() %></td>
 		</tr>
 		<%
 	}

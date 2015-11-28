@@ -1,6 +1,7 @@
 package assignment.command;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +12,6 @@ import assignment.exceptions.DaoException;
 
 public class AddArticleCommand implements Command {
 	
-	 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		String articleContent = request.getParameter("contentInputArea");
@@ -24,14 +24,11 @@ public class AddArticleCommand implements Command {
 		ArticleDao articleDao = new ArticleDao();
 		SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		try {
-			articleDao.addArticle(new Article(articleTitle, articleContent, date.toString()));
+			articleDao.addArticle(new Article(articleTitle, articleContent, date.format(new Date())));
 		} catch (DaoException e) {
 			e.printStackTrace();
-		}
-		
-		// If success return to login page, else error page.
-		return "";
+			return "/errorPage.jsp";
+		}	
+		return "/loginSuccess.jsp";
 	}
-	
-
 }
