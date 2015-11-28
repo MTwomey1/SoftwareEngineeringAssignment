@@ -32,7 +32,7 @@
     </form>
     
     <form action="FrontController" method="post">
-    	<input type = "hidden" name="action" value="AddArticle"/>
+    	<input type = "hidden" name="action" value="AddArticlePage"/>
     	<input type = "submit" value="Add Articles"/>
     </form>    
 		

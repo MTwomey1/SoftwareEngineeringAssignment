@@ -22,15 +22,16 @@ import assignment.exceptions.CommandCreationException;
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String LOGIN_ACTION = "LoginUser";
-	private static final String ADD_ARTICLE = "AddArticle";
+	private static final String ADD_ARTICLE_PAGE = "AddArticlePage";
+	private static final String ADD_ARTICLE = "InsertArticle";
 	private static final String GET_ARTICLE = "GetArticle";
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public FrontController() {
-        super();
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public FrontController() {
+		super();
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,46 +40,58 @@ public class FrontController extends HttpServlet {
 		processRequest (request, response);
 	}
 
-	
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}	
-	
-	
+
+
 	/**
 	 * Common method to process all client requests (GET and POST)
 	 */
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
-		String forwardToJsp = null;		
+		String forwardToJsp = "";		
 		String commandToCreate = request.getParameter("action");
 		CommandType commandType = null;
-		
-		if (commandToCreate.equalsIgnoreCase(LOGIN_ACTION) ){
+		System.out.println("Request is: " + request.getParameter("action"));
+		switch (commandToCreate) {
+		case LOGIN_ACTION:
 			commandType = CommandType.LOGIN_COMMAND;
-		} else if (commandToCreate.equalsIgnoreCase(ADD_ARTICLE)) {
-			commandType = CommandType.ADD_ARTICLE_COMMAND;
-		} else if (commandToCreate.equalsIgnoreCase(GET_ARTICLE)) {
+			break;
+		case ADD_ARTICLE:
+			commandType = CommandType.ADD_ARTICLE;
+			break;
+		case GET_ARTICLE:
 			commandType = CommandType.GET_ARTICLE_COMMAND;
+			break;
+		default:
+			break;
 		}
-		
-		System.out.println("CommandType is: " + commandType);
+
+
+		if (commandToCreate.equalsIgnoreCase(ADD_ARTICLE_PAGE)) {
+			forwardToPage(request, response, "/addArticlePage.jsp");
+			return; 
+		}
+
+		System.out.println("Command Type created:" + commandType);
 		
 		CommandFactory commandFactory = (CommandFactory)CommandFactory.getSharedInstance();
 		Command command = commandFactory.createCommand(commandType);
 		forwardToJsp = command.execute(request, response);
 		forwardToPage(request, response, forwardToJsp);
 	}
-	
-//	if (!isUserLoggedIn(request.getSession())){
-//		forwardToJsp = "/loginFailure.jsp";
-//		forwardToPage(request, response, forwardToJsp);
-//		return;
-//	}
-		
-	
+
+	//	if (!isUserLoggedIn(request.getSession())){
+	//		forwardToJsp = "/loginFailure.jsp";
+	//		forwardToPage(request, response, forwardToJsp);
+	//		return;
+	//	}
+
+
 	/**
 	 * Checks to see if the user is already logged in.
 	 * @param session The session used to check if the user is logged in
@@ -91,9 +104,9 @@ public class FrontController extends HttpServlet {
 			return false;
 		}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Forward to server to the supplied page
 	 */
@@ -110,6 +123,6 @@ public class FrontController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }

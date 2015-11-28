@@ -7,9 +7,11 @@ import assignment.dao.ArticleDao;
 
 public class AddArticleCommand implements Command {
 	
+	 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		return "/addArticle.jsp";
+		System.out.println("3333");
+		return "";
 	}
 	
 

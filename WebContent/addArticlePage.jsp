@@ -17,10 +17,12 @@
 			</tr>
 			<tr>
 				<td>Content :</td>
-				<td><input name="content" size=15 type="text" /></td>
+				<td>
+					<textarea rows="4" cols="50"></textarea>
+				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="action" value="AddArticle" /> 
+		<input type="hidden" name="action" value="InsertArticle" /> 
 		<input type="submit" value="submit" />
 	</form>
 

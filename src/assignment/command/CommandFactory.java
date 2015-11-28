@@ -32,7 +32,7 @@ public class CommandFactory extends AbstractCommandFactory {
 		case LOGIN_COMMAND:
 			System.out.println("Login Command");
 			return createLoginCommand();
-		case ADD_ARTICLE_COMMAND:
+		case ADD_ARTICLE:
 			System.out.println("Add article Command");
 			return createAddArticleCommand();
 		case GET_ARTICLE_COMMAND:
