@@ -18,7 +18,7 @@
 			<tr>
 				<td>Content :</td>
 				<td>
-					<textarea rows="4" cols="50"></textarea>
+					<textarea name = "contentInputArea" rows="4" cols="50"></textarea>
 				</td>
 			</tr>
 		</table>
