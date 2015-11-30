@@ -17,9 +17,12 @@ import assignment.exceptions.CommandCreationException;
 
 @WebServlet(urlPatterns={"/FrontController"})
 public class FrontController extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	private static final String LOGIN_ACTION = "LoginUser";
+	private static final String CREATE_USER_PAGE = "CreateUserPage";
 	private static final String ADD_ARTICLE_PAGE = "AddArticlePage";
+	private static final String LOGIN_PAGE = "LoginPage";
 	private static final String ADD_ARTICLE = "InsertArticle";
 	private static final String NEWS_FEED = "NewsFeed";
 
@@ -53,6 +56,19 @@ public class FrontController extends HttpServlet {
 		String forwardToJsp = "";		
 		String commandToCreate = request.getParameter("action");
 		CommandType commandType = null;
+		
+		if (commandToCreate.equalsIgnoreCase(ADD_ARTICLE_PAGE)) {
+			forwardToPage(request, response, "/addArticlePage.jsp");
+			return; 
+		} else if (commandToCreate.equals(CREATE_USER_PAGE)) {
+			forwardToPage(request, response, "/createUserPage.jsp");
+			return;
+		} else if (commandToCreate.equals(LOGIN_PAGE)) {
+			forwardToPage(request, response, "/loginPage.jsp");
+			return;
+		}
+		
+		
 		System.out.println("Request is: " + request.getParameter("action"));
 		switch (commandToCreate) {
 		case LOGIN_ACTION:
@@ -69,10 +85,6 @@ public class FrontController extends HttpServlet {
 		}
 
 
-		if (commandToCreate.equalsIgnoreCase(ADD_ARTICLE_PAGE)) {
-			forwardToPage(request, response, "/addArticlePage.jsp");
-			return; 
-		}
 
 		System.out.println("Command Type created:" + commandType);
 		

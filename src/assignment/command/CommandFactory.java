@@ -25,6 +25,9 @@ public class CommandFactory extends AbstractCommandFactory {
 	 * @param commandType The type of command to create.
 	 * 					  @see CommandType for the list of
 	 * 					  commands to create.
+	 * 
+	 * @return The command created. If an unknown command was
+	 * 		   passed, null will be returned.
 	 **/
 	@Override
 	public Command createCommand(CommandType commandType) {
