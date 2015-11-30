@@ -29,8 +29,8 @@ public class ArticleDao extends Dao {
         	addArticleStatement.executeUpdate();
         	int articleid;
         	
-        	articleid = getGeneratedKeys(addArticleStatement, "id");
-        	System.out.println("Generated article key: "+ articleid);
+        	// Get the auto incremented key from the article table.
+        	articleid = getGeneratedKeys(addArticleStatement, 1);
         	
         	// Insert into the articleCreated table
         	addArticleCreatedStatement = connection.prepareStatement(ArticleDAOSchema.ADD_ARTICLE_CREATED);
@@ -59,15 +59,24 @@ public class ArticleDao extends Dao {
 		}
 	}
 
-	private int getGeneratedKeys(PreparedStatement statement, String column) throws DaoException {
+	/**
+	 * Gets the key generated from an insert on a table
+	 * 
+	 * @param statement The statement used.
+	 * @param column The index of the column where the key will be generated.
+	 * @return The value of the generated key if it was successful.
+	 * @throws DaoException if a key could not be found.
+	 *  */
+	private int getGeneratedKeys(PreparedStatement statement, int columnIndex) throws DaoException {
 		try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
 			 if (generatedKeys.next()) { 
-				 return generatedKeys.getInt(1);
+				 return generatedKeys.getInt(columnIndex);
+			 } else {
+				 throw new DaoException("Could not find generated key.");
 			 }
 		 } catch(SQLException e) {
-			 throw new DaoException("Creat failed, no ID obtained.");
+			throw new DaoException("Could not find generated key"); 
 		 }	
-		return 0;
 	}
 	
 	
