@@ -27,6 +27,19 @@ public class UserService implements LoginServiceRequest {
 	}
 	
 	
+	/**
+	 * Creates a user account.
+	 * @param user The user to create.
+	 * @throws DaoException @see {@link UserDao#insertUserIntoDatabase(User)}
+	 * 					    for throw reasons.
+	 **/
+	public <T extends User & ValidUser> void createUserAccount(T user) throws DaoException {
+		UserDao userDao = new UserDao();
+		userDao.insertUserIntoDatabase(user);
+	}
+	
+	
+	
 	private void addUserToManager(User user) {
 		if (user == null) {
 			return;

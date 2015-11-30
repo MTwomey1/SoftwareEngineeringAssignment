@@ -12,7 +12,7 @@ public class CommandFactory extends AbstractCommandFactory {
      * Returns a sharedInstance of CommandFactory
      * @return The sharedInstance.
      **/
-	public static synchronized AbstractCommandFactory getSharedInstance() {
+	public static synchronized CommandFactory getSharedInstance() {
 		if (factory == null) {
 			factory = new CommandFactory();
 		}
@@ -33,14 +33,13 @@ public class CommandFactory extends AbstractCommandFactory {
 	public Command createCommand(CommandType commandType) {
 		switch (commandType) {
 		case LOGIN_COMMAND:
-			System.out.println("Login Command");
 			return createLoginCommand();
 		case ADD_ARTICLE:
-			System.out.println("Add article Command");
 			return createAddArticleCommand();
 		case GET_ALL_ARTICLE_COMMAND:
-			System.out.println("Get article Command");
 			return createGetAllArticlesCommand();
+		case CREATE_USER:
+			return createUserCreationCommand();
 		default:
 			return null;
 		}
@@ -57,6 +56,10 @@ public class CommandFactory extends AbstractCommandFactory {
 	
 	private Command createGetAllArticlesCommand() {
 		return new GetAllArticleCommand();
+	}
+	
+	private Command createUserCreationCommand() {
+		return new CreateUserCommand();
 	}
 
 }

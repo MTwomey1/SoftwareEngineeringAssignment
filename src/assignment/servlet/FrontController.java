@@ -19,12 +19,15 @@ import assignment.exceptions.CommandCreationException;
 public class FrontController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private static final String LOGIN_ACTION = "LoginUser";
+	
 	private static final String CREATE_USER_PAGE = "CreateUserPage";
 	private static final String ADD_ARTICLE_PAGE = "AddArticlePage";
 	private static final String LOGIN_PAGE = "LoginPage";
+	
+	private static final String LOGIN_ACTION = "LoginUser";
 	private static final String ADD_ARTICLE = "InsertArticle";
 	private static final String NEWS_FEED = "NewsFeed";
+	private static final String CREATE_USER = "CreateUser";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -36,7 +39,8 @@ public class FrontController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		processRequest (request, response);
 	}
 
@@ -44,7 +48,8 @@ public class FrontController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		processRequest(request, response);
 	}	
 
@@ -80,6 +85,8 @@ public class FrontController extends HttpServlet {
 		case NEWS_FEED:
 			commandType = CommandType.GET_ALL_ARTICLE_COMMAND;
 			break;
+		case CREATE_USER:
+			commandType = CommandType.CREATE_USER;
 		default:
 			break;
 		}
@@ -119,7 +126,8 @@ public class FrontController extends HttpServlet {
 	/**
 	 * Forward to server to the supplied page
 	 */
-	private void forwardToPage(HttpServletRequest request, HttpServletResponse response, String page){
+	private void forwardToPage(HttpServletRequest request, HttpServletResponse response, 
+			String page){
 		System.out.println("Page" + page);
 		//Get the request dispatcher object and forward the request to the appropriate JSP page...
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
