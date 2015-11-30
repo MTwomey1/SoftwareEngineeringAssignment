@@ -59,6 +59,7 @@ public class ArticleDao extends Dao {
 		}
 	}
 
+	
 	/**
 	 * Gets the key generated from an insert on a table
 	 * 
@@ -78,6 +79,7 @@ public class ArticleDao extends Dao {
 			throw new DaoException("Could not find generated key"); 
 		 }	
 	}
+	
 	
 	
 	/**
@@ -128,6 +130,7 @@ public class ArticleDao extends Dao {
 	}
 	
 	
+	
 	public Article[] getAllArticles() throws DaoException {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
@@ -171,11 +174,32 @@ public class ArticleDao extends Dao {
 	}
 	
 	
+	
+	/**
+	 * All transactions and selects to query the Article and
+	 * ArticleCreated table.
+	 * */
 	private final class ArticleDAOSchema {
+		/**
+		 * Query to get an article from the database.
+		 * */
 		public final static String GET_ARTICLE = "SELECT * FROM Article WHERE id = ?";
+		
+		/**
+		 * Query to get all articles within the database.
+		 * */
 		public final static String GET_ALL_ARTICLES = "select * from article"
 				+ "join articlecreated on article.id = articlecreated.articleid;";
+		
+		/**
+		 * Transaction to add an article to the database.
+		 * */
 		public final static String ADD_ARTICLE = "INSERT INTO Article VALUES(DEFAULT, ?, ?)";
+		
+		/**
+		 * Transaction to add to the ArticleCreated table, which is a weak entity an needs to be
+		 * updated every time an article is added to the database.
+		 * */
 		public final static String ADD_ARTICLE_CREATED = "INSERT INTO ArticleCreated VALUES(?, ?, ?)";
 		
 	}
