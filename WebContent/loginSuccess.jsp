@@ -34,7 +34,11 @@
     <form action="FrontController" method="post">
     	<input type = "hidden" name="action" value="AddArticlePage"/>
     	<input type = "submit" value="Add Articles"/>
-    </form>    
+    </form>   
+    <form action="FrontController" method="post">
+    	<input type = "hidden" name="action" value="NewsFeed"/>
+    	<input type = "submit" value="See News Feed"/>
+    </form>     
 		
 </body>
 

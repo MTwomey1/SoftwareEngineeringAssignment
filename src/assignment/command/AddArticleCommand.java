@@ -5,10 +5,11 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import assignment.business.User;
 import assignment.business.Article;
 import assignment.dao.ArticleDao;
 import assignment.exceptions.DaoException;
+import assignment.service.UserService;
 
 public class AddArticleCommand implements Command {
 	
@@ -23,8 +24,12 @@ public class AddArticleCommand implements Command {
 		
 		ArticleDao articleDao = new ArticleDao();
 		SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		User currentUser = UserService.UserManager.getCurrentUser();
 		try {
-			articleDao.addArticle(new Article(articleTitle, articleContent, date.format(new Date())));
+			System.out.println(request.getRemoteUser());
+			
+			articleDao.addArticle(new Article(articleTitle, articleContent, date.format(new Date())), currentUser);
+		
 		} catch (DaoException e) {
 			e.printStackTrace();
 			return "/errorPage.jsp";

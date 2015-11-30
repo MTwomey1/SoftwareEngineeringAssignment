@@ -7,32 +7,45 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Connection;
 import assignment.business.Article;
+import assignment.business.User;
 import assignment.exceptions.DaoException;
 
 public class ArticleDao extends Dao {
 	
 	
-	public void addArticle(Article article) throws DaoException {
+	public void addArticle(Article article, User user) throws DaoException {
 		Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        PreparedStatement addArticleStatement = null;
+        PreparedStatement addArticleCreatedStatement = null;
         
         try {
         	connection = this.getConnection();
-        	preparedStatement = connection.prepareStatement(ArticleDAOSchema.ADD_ARTICLE);
+        	addArticleStatement = connection.prepareStatement(ArticleDAOSchema.ADD_ARTICLE);
         	
-        	preparedStatement.setString(1, article.getTitle());
-        	preparedStatement.setString(2, article.getContents());
-        	preparedStatement.setString(3, article.getDateCreated());
+        	// Insert into the article table.
+        	addArticleStatement.setString(1, article.getTitle());
+        	addArticleStatement.setString(2, article.getContents());
+        	int articleid = addArticleStatement.executeUpdate();
         	
-        	preparedStatement.executeUpdate();
+        	// Insert into the articleCreated table
+        	addArticleCreatedStatement = connection.prepareStatement(ArticleDAOSchema.ADD_ARTICLE_CREATED);
+        	addArticleCreatedStatement.setString(1, article.getDateCreated());
+        	addArticleCreatedStatement.setInt(2, articleid);
+        	addArticleCreatedStatement.setInt(3, user.getId());
+        	addArticleCreatedStatement.executeUpdate();
+        	
+        	System.out.println("QUERY: " + addArticleCreatedStatement.toString());
         	
         } catch (SQLException e) {
         	e.printStackTrace();
         } finally {
         	try {
-        		if (preparedStatement != null) {
-                    preparedStatement.close();
+        		if (addArticleStatement != null) {
+                    addArticleStatement.close();
                 }
+        		if (addArticleCreatedStatement != null) {
+        			addArticleCreatedStatement .close();
+        		}
                 if (connection != null) {
                     freeConnection(connection);
                 }
@@ -41,6 +54,8 @@ public class ArticleDao extends Dao {
             }
 		}
 	}
+
+	
 	
 	/**
 	 * Gets an article from the database according to its id.
@@ -64,7 +79,7 @@ public class ArticleDao extends Dao {
         	while (resultSet.next()) {
         		int _id = resultSet.getInt("id");
         		String title = resultSet.getString("title");
-        		String contents = resultSet.getString("body");
+        		String contents = resultSet.getString("content");
         		String date = resultSet.getString("date");
         		
         		article = new Article(_id, title, contents, date);
@@ -133,6 +148,7 @@ public class ArticleDao extends Dao {
 	private final class ArticleDAOSchema {
 		public final static String GET_ARTICLE = "SELECT * FROM Article WHERE id = ?";
 		public final static String GET_ALL_ARTICLES = "SELECT * FROM Article";
-		public final static String ADD_ARTICLE = "INSERT INTO Article VALUES(DEFAULT, ?, ?, ?)";
+		public final static String ADD_ARTICLE = "INSERT INTO Article VALUES(DEFAULT, ?, ?)";
+		public final static String ADD_ARTICLE_CREATED = "INSERT INTO ArticleCreated VALUES(?, ?, ?)";
 	}
 }

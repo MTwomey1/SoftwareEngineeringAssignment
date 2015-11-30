@@ -37,8 +37,8 @@ public class UserDao extends Dao {
             	int userId = resultSet.getInt("ID");
                 String _username = resultSet.getString("USERNAME");
                 String _password = resultSet.getString("PASSWORD");
-                String lastname = resultSet.getString("LAST_NAME");
-                String firstname = resultSet.getString("FIRST_NAME");
+                String lastname = resultSet.getString("LASTNAME");
+                String firstname = resultSet.getString("FIRSTNAME");
                 user = new User(userId, firstname, lastname, _username, _password, UserAccessPriveledge.GUEST);
             }
         } catch (SQLException e) {

@@ -13,7 +13,7 @@ public class User implements Serializable {
 	private String password;
 	private UserAccessPriveledge accessPriveledge;
 	
-	
+	public User() {}
 	public User(int userId, String firstName, String lastName,
 			String username, String password, UserAccessPriveledge accessPriveledge) {
 		setId(userId);

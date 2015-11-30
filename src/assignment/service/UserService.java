@@ -1,16 +1,13 @@
 package assignment.service;
 
-import assignment.business.Article;
 import assignment.business.User;
-import assignment.dao.ArticleDao;
 import assignment.dao.UserDao;
 import assignment.exceptions.DaoException;
 
 
-public class UserService implements ServiceRequest {
+public class UserService implements LoginServiceRequest {
 
 	UserDao userDao = new UserDao();
-	ArticleDao articleDao = new ArticleDao();
 	
 	public UserService() {
 	}
@@ -21,29 +18,37 @@ public class UserService implements ServiceRequest {
 		
 		try {			
 			user = userDao.findUserByUsernamePassword(username, password);
+			addUserToManager(user);
 		} 
 		catch (DaoException e) {
 			e.printStackTrace();
 		}
-		return user;	
+		return user;
 	}
-
-
-	@Override
-	public void addArticle(Article article) {
-		
-	}
-
-
-	@Override
-	public Article getArticle(String id) {
-		Article article = null;
-		
-		try {
-			article = articleDao.getArticle(1);
-		} catch (DaoException e) {
-			e.printStackTrace();
+	
+	
+	private void addUserToManager(User user) {
+		if (user == null) {
+			return;
 		}
-		return article;
+		UserManager.setCurrentUser(user);
 	}
+	
+	
+	/**
+	 * A static inner class that will hold a record
+	 * of the current user that is logged in.
+	 **/
+	public static class UserManager {
+		private static User currentUser;
+		
+		public static void setCurrentUser(User currentUser) {
+			UserManager.currentUser = currentUser;
+		}
+		
+		public static User getCurrentUser() {
+			return currentUser;
+		}
+	}
+
 }

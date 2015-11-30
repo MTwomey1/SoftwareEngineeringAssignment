@@ -25,7 +25,7 @@ public class LoginUserCommand implements Command {
 			// Make call to the 'Model' using the UserServive class to login...
 			User userLoggingIn = userService.login(username, password);
 
-			if (userLoggingIn != null){
+			if (userLoggingIn != null) {
 
 				//If login successful, store the session id for this client...
 				HttpSession session = request.getSession();
