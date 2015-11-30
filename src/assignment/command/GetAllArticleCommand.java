@@ -10,7 +10,7 @@ import assignment.exceptions.DaoException;
 
 public class GetAllArticleCommand implements Command {
 	
-	private String allArticlesPage = "/allArticles.jsp";
+	private String allArticlesPage = "/newsFeed.jsp";
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {

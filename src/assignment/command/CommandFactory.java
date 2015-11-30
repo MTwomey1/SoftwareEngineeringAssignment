@@ -35,7 +35,7 @@ public class CommandFactory extends AbstractCommandFactory {
 		case ADD_ARTICLE:
 			System.out.println("Add article Command");
 			return createAddArticleCommand();
-		case GET_ARTICLE_COMMAND:
+		case GET_ALL_ARTICLE_COMMAND:
 			System.out.println("Get article Command");
 			return createGetAllArticlesCommand();
 		default:

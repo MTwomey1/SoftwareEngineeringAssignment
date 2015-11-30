@@ -15,16 +15,13 @@ import assignment.command.CommandType;
 import assignment.exceptions.CommandCreationException;
 
 
-/**
- * Servlet implementation class FrontController
- */
 @WebServlet(urlPatterns={"/FrontController"})
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String LOGIN_ACTION = "LoginUser";
 	private static final String ADD_ARTICLE_PAGE = "AddArticlePage";
 	private static final String ADD_ARTICLE = "InsertArticle";
-	private static final String GET_ARTICLE = "GetArticle";
+	private static final String NEWS_FEED = "NewsFeed";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -64,8 +61,8 @@ public class FrontController extends HttpServlet {
 		case ADD_ARTICLE:
 			commandType = CommandType.ADD_ARTICLE;
 			break;
-		case GET_ARTICLE:
-			commandType = CommandType.GET_ARTICLE_COMMAND;
+		case NEWS_FEED:
+			commandType = CommandType.GET_ALL_ARTICLE_COMMAND;
 			break;
 		default:
 			break;

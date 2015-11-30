@@ -34,7 +34,6 @@ public class ArticleDao extends Dao {
         	addArticleCreatedStatement.setInt(3, user.getId());
         	addArticleCreatedStatement.executeUpdate();
         	
-        	System.out.println("QUERY: " + addArticleCreatedStatement.toString());
         	
         } catch (SQLException e) {
         	e.printStackTrace();
@@ -119,7 +118,7 @@ public class ArticleDao extends Dao {
 			while (resultSet.next()) {
 				int _id = resultSet.getInt("id");
         		String title = resultSet.getString("title");
-        		String contents = resultSet.getString("body");
+        		String contents = resultSet.getString("content");
         		String date = resultSet.getString("date");
         		
         		articles.add(new Article(_id, title, contents, date));
@@ -150,5 +149,6 @@ public class ArticleDao extends Dao {
 		public final static String GET_ALL_ARTICLES = "SELECT * FROM Article";
 		public final static String ADD_ARTICLE = "INSERT INTO Article VALUES(DEFAULT, ?, ?)";
 		public final static String ADD_ARTICLE_CREATED = "INSERT INTO ArticleCreated VALUES(?, ?, ?)";
+		
 	}
 }

@@ -27,18 +27,15 @@
     </form> 
     
     <form action="FrontController" method="post">
-    	<input type = "hidden" name="action" value="GetArticle"/>
-    	<input type = "submit" value="See all Articles"/>
+    	<input type = "hidden" name="action" value="NewsFeed"/>
+    	<input type = "submit" value="News Feed"/>
     </form>
     
     <form action="FrontController" method="post">
     	<input type = "hidden" name="action" value="AddArticlePage"/>
     	<input type = "submit" value="Add Articles"/>
     </form>   
-    <form action="FrontController" method="post">
-    	<input type = "hidden" name="action" value="NewsFeed"/>
-    	<input type = "submit" value="See News Feed"/>
-    </form>     
+    
 		
 </body>
 
