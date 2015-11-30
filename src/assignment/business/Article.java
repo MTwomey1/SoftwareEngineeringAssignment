@@ -6,6 +6,7 @@ public class Article {
 	private String title;
 	private String contents;
 	private String dateCreated;
+	private User author;
 	
 	
 	public Article(String title, String contents, String dateCreated) {
@@ -21,6 +22,23 @@ public class Article {
 		setId(id);
 	}
 	
+	public Article(int id, String title, String contents, String dateCreated, User author) {
+		setId(id);
+		setTitle(title);
+		setContents(contents);
+		setDateCreated(dateCreated);
+		setAuthor(author);
+	}
+	
+	
+	
+	public User getAuthor() {
+		return author;
+	}
+	
+	public void setAuthor(User author) {
+		this.author = author;
+	}
 	
 	public int getId() {
 		return id;

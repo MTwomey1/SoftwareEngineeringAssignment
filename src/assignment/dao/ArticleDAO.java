@@ -20,12 +20,17 @@ public class ArticleDao extends Dao {
         
         try {
         	connection = this.getConnection();
-        	addArticleStatement = connection.prepareStatement(ArticleDAOSchema.ADD_ARTICLE);
+        	addArticleStatement = connection.prepareStatement(ArticleDAOSchema.ADD_ARTICLE, 
+        			PreparedStatement.RETURN_GENERATED_KEYS);
         	
         	// Insert into the article table.
         	addArticleStatement.setString(1, article.getTitle());
         	addArticleStatement.setString(2, article.getContents());
-        	int articleid = addArticleStatement.executeUpdate();
+        	addArticleStatement.executeUpdate();
+        	int articleid;
+        	
+        	articleid = getGeneratedKeys(addArticleStatement, "id");
+        	System.out.println("Generated article key: "+ articleid);
         	
         	// Insert into the articleCreated table
         	addArticleCreatedStatement = connection.prepareStatement(ArticleDAOSchema.ADD_ARTICLE_CREATED);
@@ -54,6 +59,16 @@ public class ArticleDao extends Dao {
 		}
 	}
 
+	private int getGeneratedKeys(PreparedStatement statement, String column) throws DaoException {
+		try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+			 if (generatedKeys.next()) { 
+				 return generatedKeys.getInt(1);
+			 }
+		 } catch(SQLException e) {
+			 throw new DaoException("Creat failed, no ID obtained.");
+		 }	
+		return 0;
+	}
 	
 	
 	/**
@@ -119,9 +134,12 @@ public class ArticleDao extends Dao {
 				int _id = resultSet.getInt("id");
         		String title = resultSet.getString("title");
         		String contents = resultSet.getString("content");
-        		String date = resultSet.getString("date");
+        		String date = resultSet.getString("dateAdded");
+        		int authorID = resultSet.getInt("userid");
+        		User author = new User();
+        		author.setId(authorID);
         		
-        		articles.add(new Article(_id, title, contents, date));
+        		articles.add(new Article(_id, title, contents, date, author));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -146,7 +164,8 @@ public class ArticleDao extends Dao {
 	
 	private final class ArticleDAOSchema {
 		public final static String GET_ARTICLE = "SELECT * FROM Article WHERE id = ?";
-		public final static String GET_ALL_ARTICLES = "SELECT * FROM Article";
+		public final static String GET_ALL_ARTICLES = "select * from article"
+				+ "join articlecreated on article.id = articlecreated.articleid;";
 		public final static String ADD_ARTICLE = "INSERT INTO Article VALUES(DEFAULT, ?, ?)";
 		public final static String ADD_ARTICLE_CREATED = "INSERT INTO ArticleCreated VALUES(?, ?, ?)";
 		
