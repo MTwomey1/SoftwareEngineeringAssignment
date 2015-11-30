@@ -38,24 +38,6 @@ public class User implements Serializable, ValidUser {
 
 
 
-
-	public boolean isValidUser() {
-		if (getPassword() == null) {
-			return false;
-		} else if (getUsername() == null) {
-			return false;
-		} else if (getFirstName() == null) {
-			return false;
-		} else if (getLastName() == null) {
-			return false;
-		} else if (getAccessPriveledge().toString() == null) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-
 	
 	@Override
 	public boolean passwordIsValid() {
@@ -116,5 +98,19 @@ public class User implements Serializable, ValidUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	@Override
+	public String toString() {
+		String returnString = 
+				"Username: " + getUsername()
+				+ "\nFirstname: " + getFirstName()
+				+ "\nLastname; " + getLastName()
+				+ "\nAccess: " + getAccessPriveledge();
+		
+		if (getPassword() != null) {
+			return returnString + "\nPassword is not null.";
+		} else {
+			return returnString + "\nPassword is null.";
+		}
+	}
 }

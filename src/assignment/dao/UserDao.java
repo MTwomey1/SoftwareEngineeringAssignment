@@ -22,8 +22,7 @@ public class UserDao extends Dao {
 	 * @throws DaoException If any attributes in the user is null.
 	 * Or if there was another SQL error.
 	 * */
-	public <T extends User & ValidUser> 
-	void insertUserIntoDatabase(T user) throws DaoException {
+	public void insertUserIntoDatabase(User user) throws DaoException {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;

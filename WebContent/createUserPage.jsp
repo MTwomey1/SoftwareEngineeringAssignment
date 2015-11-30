@@ -28,7 +28,7 @@
 			</tr>
 		</table>
 		<input type="hidden" name="action" value="CreateUser" /> <input
-			type="submit" value="login" />
+			type="submit" value="CreateUser" />
 	</form>
 </body>
 </html>
