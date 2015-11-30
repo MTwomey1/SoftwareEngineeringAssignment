@@ -16,7 +16,6 @@ public class UserService implements LoginServiceRequest {
 	
 	public User login(String username, String password) {
 		User user = null;
-		
 		try {			
 			user = userDao.findUserByUsernamePassword(username, password);
 			addUserToManager(user);

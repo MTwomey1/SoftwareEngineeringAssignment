@@ -12,19 +12,19 @@
 		<table>
 			<tr>
 				<td>User name :</td>
-				<td><input name="User name" size=15 type="text" /></td>
+				<td><input name="username" size=15 type="text" /></td>
 			</tr>
 			<tr>
 				<td>Password :</td>
-				<td><input name="Password" size=15 type="password" /></td>
+				<td><input name="password" size=15 type="password" /></td>
 			</tr>
 			<tr>
 				<td>First name</td>
-				<td><input name="First Name" size=15 type="text" /></td>
+				<td><input name="firstname" size=15 type="text" /></td>
 			</tr>
 			<tr>
 				<td>Last name</td>
-				<td><input name="Last Name" size=15 type="text" /></td>
+				<td><input name="lastname" size=15 type="text" /></td>
 			</tr>
 		</table>
 		<input type="hidden" name="action" value="CreateUser" /> <input

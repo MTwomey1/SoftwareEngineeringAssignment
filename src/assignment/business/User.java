@@ -17,7 +17,7 @@ public class User implements Serializable, ValidUser {
 
 	public User() {}
 
-	public User(String firstname, String lastname, String username, String password, 
+	public User(String firstName, String lastName, String username, String password, 
 			UserAccessPriveledge accessPriveledge) {
 		setFirstName(firstName);
 		setLastName(lastName);

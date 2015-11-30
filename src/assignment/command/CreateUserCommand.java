@@ -1,14 +1,14 @@
 package assignment.command;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import assignment.business.User;
 import assignment.business.UserAccessPriveledge;
-import assignment.dao.UserDao;
 import assignment.exceptions.DaoException;
 import assignment.exceptions.InvalidUserException;
 import assignment.service.UserService;
+
 
 public class CreateUserCommand implements Command {
 
@@ -25,9 +25,10 @@ public class CreateUserCommand implements Command {
 			userService.createUserAccount(user);
 			return "/createSuccess.jsp";
 		} catch(DaoException e) {
-			System.out.println("DaoException");
+			e.printStackTrace();
 			return "/error.jsp";
 		} catch(InvalidUserException e) {
+			e.printStackTrace();
 			System.out.println("Invalid user.");
 			// TODO: Correct error message as to what was invalid.
 			return "/error.jsp";

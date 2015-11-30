@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import assignment.business.User;
 import assignment.business.UserAccessPriveledge;
 import assignment.exceptions.DaoException;
-import assignment.service.ValidUser;
 
 
 public class UserDao extends Dao {
@@ -17,7 +16,7 @@ public class UserDao extends Dao {
 	 * 
 	 * @param The user to insert into the database.
 	 * Note: All attributes of the user must be set.
-	 * Otherwise a DAOExcpetion will be thrown.
+	 * Otherwise a DaoExcpetion will be thrown.
 	 * 
 	 * @throws DaoException If any attributes in the user is null.
 	 * Or if there was another SQL error.
@@ -25,26 +24,24 @@ public class UserDao extends Dao {
 	public void insertUserIntoDatabase(User user) throws DaoException {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		ResultSet resultSet = null;
 		
 		try {
 			connection = this.getConnection();
 			
 			statement = connection.prepareStatement(UserDaoSchema.INSERT_USER);
 			
-			statement.setString(2, user.getPassword());
-			statement.setString(3, user.getUsername());
-			statement.setString(4, user.getFirstName());
-			statement.setString(5, user.getLastName());
-			statement.setString(6, user.getAccessPriveledge().toString());
-			resultSet = statement.executeQuery();
+			statement.setString(1, user.getPassword());
+			statement.setString(2, user.getUsername());
+			statement.setString(3, user.getFirstName());
+			statement.setString(4, user.getLastName());
+			statement.setString(5, user.getAccessPriveledge().toString());
+			statement.executeUpdate();
+			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new DaoException("Could not insert user into the database");
 		} finally {
             try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
                 if (statement != null) {
                     statement.close();
                 }
@@ -107,6 +104,6 @@ public class UserDao extends Dao {
     
     private final class UserDaoSchema {
     	public static final String SELECT_USER = "SELECT * FROM USER WHERE USERNAME = ? AND PASSWORD = ?";
-    	public static final String INSERT_USER = "INSERT INTO TABLE User VALUES(DEFAULT, ?, ?, ?, ?, ?)";
+    	public static final String INSERT_USER = "INSERT INTO User VALUES(DEFAULT, ?, ?, ?, ?, ?)";
     }
 }
