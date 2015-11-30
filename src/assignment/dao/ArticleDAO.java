@@ -130,7 +130,13 @@ public class ArticleDao extends Dao {
 	}
 	
 	
-	
+	/**
+	 * Gets all the article within the database.
+	 * 
+	 * @return An array of articles if found.
+	 * @throws DaoException This will be thrown if an Article cannot
+	 * be found within the database.
+	 **/
 	public Article[] getAllArticles() throws DaoException {
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
@@ -143,7 +149,7 @@ public class ArticleDao extends Dao {
 			resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				int _id = resultSet.getInt("id");
+				int articleId = resultSet.getInt("articleid");
         		String title = resultSet.getString("title");
         		String contents = resultSet.getString("content");
         		String date = resultSet.getString("dateAdded");
@@ -151,7 +157,7 @@ public class ArticleDao extends Dao {
         		User author = new User();
         		author.setId(authorID);
         		
-        		articles.add(new Article(_id, title, contents, date, author));
+        		articles.add(new Article(articleId, title, contents, date, author));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -189,7 +195,7 @@ public class ArticleDao extends Dao {
 		 * Query to get all articles within the database.
 		 * */
 		public final static String GET_ALL_ARTICLES = "select * from article"
-				+ "join articlecreated on article.id = articlecreated.articleid;";
+				+ " join articlecreated on article.id = articlecreated.articleid";
 		
 		/**
 		 * Transaction to add an article to the database.
