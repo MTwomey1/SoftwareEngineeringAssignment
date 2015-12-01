@@ -28,7 +28,7 @@ public class ArticleDao extends Dao {
 			
 			while (resultSet.next()) {
 				articles.add(new Article(resultSet.getString("title"), 
-						resultSet.getString("contents"), 
+						resultSet.getString("content"), 
 						resultSet.getString("dateAdded")));
 			}
 			

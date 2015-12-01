@@ -28,6 +28,7 @@ public class FrontController extends HttpServlet {
 	private static final String ADD_ARTICLE = "InsertArticle";
 	private static final String NEWS_FEED = "NewsFeed";
 	private static final String CREATE_USER = "CreateUser";
+	private static final String VIEW_USER_PROFILE = "ViewUserProfile";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -87,12 +88,13 @@ public class FrontController extends HttpServlet {
 			commandType = CommandType.GET_ALL_ARTICLE_COMMAND;
 			break;
 		case CREATE_USER:
-			commandType = CommandType.CREATE_USER;
+			commandType = CommandType.CREATE_USER_COMMAND;
+		case VIEW_USER_PROFILE:
+			commandType = CommandType.USER_PROFILE_COMMAND;
 		default:
 			break;
 		}
 
-		System.out.println("Command Type created:" + commandType);
 		
 		CommandFactory commandFactory = (CommandFactory)CommandFactory.getSharedInstance();
 		try {
@@ -101,7 +103,6 @@ public class FrontController extends HttpServlet {
 			forwardToPage(request, response, forwardToJsp);
 		} catch(CommandCreationException e) {
 			// TODO: Appropriate error page here.
-			System.out.println("Could not create command");
 			e.printStackTrace();
 		}
 		
