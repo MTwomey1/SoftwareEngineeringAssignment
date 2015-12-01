@@ -1,5 +1,6 @@
 package assignment.command;
 
+import assignment.exceptions.CommandCreationException;
 
 public class CommandFactory extends AbstractCommandFactory {
 
@@ -30,7 +31,11 @@ public class CommandFactory extends AbstractCommandFactory {
 	 * 		   passed, null will be returned.
 	 **/
 	@Override
-	public Command createCommand(CommandType commandType) {
+	public Command createCommand(CommandType commandType) throws CommandCreationException {
+		if (commandType == null) {
+			throw new CommandCreationException("Could not create command. Command was null.");
+		}
+		
 		switch (commandType) {
 		case LOGIN_COMMAND:
 			return createLoginCommand();
@@ -41,7 +46,8 @@ public class CommandFactory extends AbstractCommandFactory {
 		case CREATE_USER:
 			return createUserCreationCommand();
 		default:
-			return null;
+			throw new 
+			CommandCreationException("Could not create command. Command was not recognised.");
 		}
 	}
 	

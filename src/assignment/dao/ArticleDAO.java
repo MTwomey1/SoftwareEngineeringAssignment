@@ -13,6 +13,33 @@ import assignment.exceptions.DaoException;
 public class ArticleDao extends Dao {
 	
 	
+	public Article[] getUsersArticles(User user) throws DaoException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		ArrayList<Article> articles = new ArrayList<>();
+		
+		try {
+			connection = this.getConnection();
+			statement = connection.prepareStatement(ArticleDaoSchema.GET_ARTICLES_FOR_USER);
+			
+			statement.setInt(1, user.getId());
+			resultSet = statement.executeQuery();
+			
+			while (resultSet.next()) {
+				articles.add(new Article(resultSet.getString("title"), 
+						resultSet.getString("contents"), 
+						resultSet.getString("dateAdded")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException();
+		}
+		return articles.toArray(new Article[articles.size()]);
+	}
+	
+	
 	public void addArticle(Article article, User user) throws DaoException {
 		Connection connection = null;
         PreparedStatement addArticleStatement = null;
@@ -20,7 +47,7 @@ public class ArticleDao extends Dao {
         
         try {
         	connection = this.getConnection();
-        	addArticleStatement = connection.prepareStatement(ArticleDAOSchema.ADD_ARTICLE, 
+        	addArticleStatement = connection.prepareStatement(ArticleDaoSchema.ADD_ARTICLE, 
         			PreparedStatement.RETURN_GENERATED_KEYS);
         	
         	// Insert into the article table.
@@ -33,7 +60,7 @@ public class ArticleDao extends Dao {
         	articleid = getGeneratedKeys(addArticleStatement, 1);
         	
         	// Insert into the articleCreated table
-        	addArticleCreatedStatement = connection.prepareStatement(ArticleDAOSchema.ADD_ARTICLE_CREATED);
+        	addArticleCreatedStatement = connection.prepareStatement(ArticleDaoSchema.ADD_ARTICLE_CREATED);
         	addArticleCreatedStatement.setString(1, article.getDateCreated());
         	addArticleCreatedStatement.setInt(2, articleid);
         	addArticleCreatedStatement.setInt(3, user.getId());
@@ -97,7 +124,7 @@ public class ArticleDao extends Dao {
         try {
         	connection = this.getConnection();
         	
-        	preparedStatement = connection.prepareStatement(ArticleDAOSchema.GET_ARTICLE);
+        	preparedStatement = connection.prepareStatement(ArticleDaoSchema.GET_ARTICLE);
         	preparedStatement.setInt(1, id);
         	
         	resultSet = preparedStatement.executeQuery();
@@ -145,7 +172,7 @@ public class ArticleDao extends Dao {
 		
 		try {
 			conn = this.getConnection();
-			preparedStatement = conn.prepareStatement(ArticleDAOSchema.GET_ALL_ARTICLES);
+			preparedStatement = conn.prepareStatement(ArticleDaoSchema.GET_ALL_ARTICLES);
 			resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
@@ -185,7 +212,7 @@ public class ArticleDao extends Dao {
 	 * All transactions and selects to query the Article and
 	 * ArticleCreated table.
 	 * */
-	private final class ArticleDAOSchema {
+	private final class ArticleDaoSchema {
 		/**
 		 * Query to get an article from the database.
 		 * */
@@ -207,6 +234,14 @@ public class ArticleDao extends Dao {
 		 * updated every time an article is added to the database.
 		 * */
 		public final static String ADD_ARTICLE_CREATED = "INSERT INTO ArticleCreated VALUES(?, ?, ?)";
+		
+		
+		/**
+		 * Select all the articles a user has inserted into the database.
+		 * */
+		public final static String GET_ARTICLES_FOR_USER = "select * from article"
+				+ " join articlecreated on article.id = articlecreated.articleid"
+				+ " where articlecreated.userid = ?";
 		
 	}
 }

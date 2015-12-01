@@ -92,14 +92,19 @@ public class FrontController extends HttpServlet {
 			break;
 		}
 
-
-
 		System.out.println("Command Type created:" + commandType);
 		
 		CommandFactory commandFactory = (CommandFactory)CommandFactory.getSharedInstance();
-		Command command = commandFactory.createCommand(commandType);
-		forwardToJsp = command.execute(request, response);
-		forwardToPage(request, response, forwardToJsp);
+		try {
+			Command command = commandFactory.createCommand(commandType);
+			forwardToJsp = command.execute(request, response);
+			forwardToPage(request, response, forwardToJsp);
+		} catch(CommandCreationException e) {
+			// TODO: Appropriate error page here.
+			System.out.println("Could not create command");
+			e.printStackTrace();
+		}
+		
 	}
 
 	//	if (!isUserLoggedIn(request.getSession())){

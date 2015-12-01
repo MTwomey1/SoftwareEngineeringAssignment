@@ -13,6 +13,6 @@
 	<h2>There was an error trying to log you in</h2>
 	<br/>
 	<br/>	
-	<a href="login.html">Try again.</a>
+	<a href="loginPage.jsp">Try again.</a>
 </body>
 </html>

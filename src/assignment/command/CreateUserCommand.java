@@ -23,7 +23,7 @@ public class CreateUserCommand implements Command {
 				UserAccessPriveledge.MEMBER);
 		try {
 			userService.createUserAccount(user);
-			return "/createSuccess.jsp";
+			return "/loginPage.jsp";
 		} catch(DaoException e) {
 			e.printStackTrace();
 			return "/error.jsp";
