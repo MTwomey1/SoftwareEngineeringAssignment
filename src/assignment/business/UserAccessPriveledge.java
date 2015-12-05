@@ -1,7 +1,7 @@
 package assignment.business;
 
 public enum UserAccessPriveledge {
-	GUEST, MEMBER, MODERATOR;
+	GUEST, MEMBER, MODERATOR, CONTENT_MANAGER;
 	
 	
 	
@@ -10,6 +10,7 @@ public enum UserAccessPriveledge {
 		case GUEST: return "Guest";
 		case MEMBER: return "Member";
 		case MODERATOR: return "Moderator";
+		case CONTENT_MANAGER: return "ContentManager";
 		default: return "";
 		}
 	}

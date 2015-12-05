@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import assignment.service.ValidUser;
 
+/**
+ * This class encapsulates all the information about a user.
+ **/
 public class User implements Serializable, ValidUser {
 
 

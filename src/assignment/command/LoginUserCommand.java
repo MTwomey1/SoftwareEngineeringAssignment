@@ -34,7 +34,7 @@ public class LoginUserCommand implements Command {
 
 				session.setAttribute("user", userLoggingIn);
 
-				forwardToJsp = "/loginSuccess.jsp";				
+				forwardToJsp = correctPageForUser(userLoggingIn);				
 			}
 			else{
 				forwardToJsp = "/loginFailure.jsp";	
@@ -46,4 +46,25 @@ public class LoginUserCommand implements Command {
 		return forwardToJsp;
 	}
 
+	
+	/**
+	 * Determines the page to return given a user logging in.
+	 * @param user the user that has logged in.
+	 * @return The page name.
+	 * */
+	private String correctPageForUser(User user) {
+		switch(user.getAccessPriveledge()) {			
+		case MEMBER:
+			return "";
+			
+		case MODERATOR:
+			return "";
+			
+		case CONTENT_MANAGER:
+			return "";
+			
+			default:
+				return "/errorPage.jsp";
+		}
+	}
 }
