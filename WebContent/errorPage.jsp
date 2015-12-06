@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Error</title>
 </head>
 <body>
 
-Oops... something went wrong, please talk to someone who knows something about this web app...
+Oops... something went wrong, that was not supposed to happen. Please try again.
 
 </body>
 </html>

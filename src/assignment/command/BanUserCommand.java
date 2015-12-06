@@ -15,7 +15,6 @@ public class BanUserCommand implements Command {
 			UserService service = new UserService();
 			String username = request.getParameter("usernametoban");
 			System.out.println("Username to ban" + username);
-			
 			service.banUser(username);
 			return "/banUserPage.jsp";
 		} catch (DaoException e) {

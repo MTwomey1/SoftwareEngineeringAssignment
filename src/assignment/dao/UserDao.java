@@ -16,6 +16,7 @@ public class UserDao extends Dao {
 	
 	/**Bans a user.
 	 * @param username The user name of user to ban.
+	 * @throws DaoException.
 	 **/
 	public void banUser(String username) throws DaoException {
 		Connection connection = null;

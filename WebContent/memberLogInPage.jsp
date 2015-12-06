@@ -8,15 +8,10 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Logged In</title>
 </head>
 
 <body>
-	You have been logged in successfully.
-
-	<br />
-	<br />
-
 	<c:set var="user" value="${sessionScope.user}" />
 	<b>Welcome<c:out value="${user.firstName}" /></b>
 	<b>What would like to do?</b>
