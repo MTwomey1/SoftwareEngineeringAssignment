@@ -21,17 +21,16 @@ public class LoginUserCommand implements Command {
 		String password = request.getParameter("password");
 		
 		
-
 		//Check we have a user name and password...
 		if (username != null && password != null){
 			
 			// Make call to the 'Model' using the UserServive class to login...
 			User userLoggingIn = userService.login(username, password);
-			if (userLoggingIn.getAccessPriveledge() == UserAccessPriveledge.BANNED) {
-				return "/banned.jsp";
-			}
-			if (userLoggingIn != null) {
 
+			if (userLoggingIn != null) {
+				if (userLoggingIn.getAccessPriveledge() == UserAccessPriveledge.BANNED) {
+					return "/banned.jsp";
+				}
 				//If login successful, store the session id for this client...
 				HttpSession session = request.getSession();
 				String clientSessionId = session.getId();
