@@ -47,6 +47,8 @@ public class CommandFactory extends AbstractCommandFactory {
 			return createUserCreationCommand();
 		case USER_PROFILE_COMMAND:
 			return createGetArticlesForUserCommand();
+		case SHOW_ALL_USERS_COMMAND:
+			return createShowUsersCommand();
 		default:
 			throw new 
 			CommandCreationException("Could not create command. Command was not recognised.");
@@ -73,6 +75,11 @@ public class CommandFactory extends AbstractCommandFactory {
 	private Command createGetArticlesForUserCommand() {
 		return new GetArticlesForUserCommand();
 	}
+	
+	private Command createShowUsersCommand() {
+		return new ShowUsersCommand();
+	}
+	
 
 }
 

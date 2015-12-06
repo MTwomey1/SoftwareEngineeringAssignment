@@ -57,6 +57,17 @@ public class UserService implements LoginServiceRequest {
 		}
 	}
 	
+	/**
+	 * Returns all users in the database.
+	 * 
+	 * @return An array of all users.
+	 * @throws DaoException.
+	 * */
+	public User[] getAllUsers() throws DaoException {
+		UserDao dao = new UserDao();
+		return dao.getAllUsers();
+	}
+	
 	
 	/**
 	 * Adds a user to be signed in.

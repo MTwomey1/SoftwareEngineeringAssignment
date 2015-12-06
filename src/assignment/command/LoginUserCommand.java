@@ -18,13 +18,14 @@ public class LoginUserCommand implements Command {
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		
+		
 
 		//Check we have a user name and password...
 		if (username != null && password != null){
 			
 			// Make call to the 'Model' using the UserServive class to login...
 			User userLoggingIn = userService.login(username, password);
-
 			if (userLoggingIn != null) {
 
 				//If login successful, store the session id for this client...
@@ -36,7 +37,7 @@ public class LoginUserCommand implements Command {
 
 				forwardToJsp = correctPageForUser(userLoggingIn);				
 			}
-			else{
+			else {
 				forwardToJsp = "/loginFailure.jsp";	
 			}
 		}
@@ -53,15 +54,16 @@ public class LoginUserCommand implements Command {
 	 * @return The page name.
 	 * */
 	private String correctPageForUser(User user) {
-		switch(user.getAccessPriveledge()) {			
+		System.out.println("priveledge is " + user.getAccessPriveledge().toString());
+		switch(user.getAccessPriveledge()) {
 		case MEMBER:
-			return "";
+			return "/memberLogInPage.jsp";
 			
 		case MODERATOR:
-			return "";
+			return "/moderatorLogInPage.jsp";
 			
 		case CONTENT_MANAGER:
-			return "";
+			return "/contentManagerLogInPage.jsp";
 			
 			default:
 				return "/errorPage.jsp";

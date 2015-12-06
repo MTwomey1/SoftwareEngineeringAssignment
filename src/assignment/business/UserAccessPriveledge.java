@@ -14,4 +14,21 @@ public enum UserAccessPriveledge {
 		default: return "";
 		}
 	}
+	
+	
+	/**
+	 * Returns a UserAccessPriveldge from its string representation
+	 * @param priveledge The string.
+	 * @return A new {@link UserAccessPriveledge}, if an unknown string is provided
+	 * null will be returned.
+	 **/
+	public static UserAccessPriveledge stringForPriveledge(String priveledge) {
+		switch (priveledge) {
+		case "Guest": return UserAccessPriveledge.GUEST;
+		case "Member": return UserAccessPriveledge.MEMBER;
+		case "Moderator": return UserAccessPriveledge.MODERATOR;
+		case "ContentManager": return UserAccessPriveledge.CONTENT_MANAGER;
+		default: return null;
+		}
+	}
 }

@@ -29,15 +29,20 @@ table {
   </tr>
 
 <% 
-	List<User> users;
-	users = (List)(request.getSession().getAttribute("users"));
 	
-	for(int i = 0; i < users.size(); i++) {
+	Object object = (request.getSession().getAttribute("users"));
+	User[] users = null;
+	
+	if (object instanceof User[]) {
+		users = (User[])object;
+	}
+	
+	for(int i = 0; i < users.length; i++) {
 		%>
 		<tr>
-			<td><%=users.get(i).getFirstName() %></td>
-			<td><%=users.get(i).getLastName() %></td>
-			<td><%=users.get(i).getUsername() %></td>
+			<td><%=users[i].getFirstName() %></td>
+			<td><%=users[i].getLastName() %></td>
+			<td><%=users[i].getUsername() %></td>
 		</tr>
 		<%
 		

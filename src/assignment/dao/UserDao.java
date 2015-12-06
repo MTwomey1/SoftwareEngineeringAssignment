@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import assignment.business.User;
 import assignment.business.UserAccessPriveledge;
 import assignment.exceptions.DaoException;
@@ -53,6 +55,9 @@ public class UserDao extends Dao {
             }
         }
 	}
+	
+	
+	
 	/**
 	 * Retrieves a user from the database with the given user name and password.
 	 * @param username The user name.
@@ -79,7 +84,16 @@ public class UserDao extends Dao {
                 String _password = resultSet.getString("PASSWORD");
                 String lastname = resultSet.getString("LASTNAME");
                 String firstname = resultSet.getString("FIRSTNAME");
-                user = new User(userId, firstname, lastname, _username, _password, UserAccessPriveledge.GUEST);
+                String access = resultSet.getString("ACCESSPRIVELEDGE");
+                
+                
+                user = new User(
+                		userId, 
+                		firstname, 
+                		lastname, 
+                		_username, 
+                		_password, 
+                		UserAccessPriveledge.stringForPriveledge(access));
             }
         } catch (SQLException e) {
             throw new DaoException("findUserByUsernamePassword " + e.getMessage());
@@ -102,7 +116,55 @@ public class UserDao extends Dao {
     }
        
     
+    public User[] getAllUsers() throws DaoException {
+    	ArrayList<User> users = new ArrayList<>();
+    	Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        
+        try {
+        	conn = this.getConnection();
+        	ps = conn.prepareStatement(UserDaoSchema.SELECT_ALL_USERS);
+        	resultSet = ps.executeQuery();
+        	
+        	while (resultSet.next()) {
+        		int userId = resultSet.getInt("ID");
+        		String username = resultSet.getString("USERNAME");
+                String password = resultSet.getString("PASSWORD");
+                String lastname = resultSet.getString("LASTNAME");
+                String firstname = resultSet.getString("FIRSTNAME");
+                String access = resultSet.getString("ACCESSPRIVELEDGE");
+                
+                users.add(new User(
+                		userId, 
+                		firstname, 
+                		lastname, 
+                		username, 
+                		password, 
+                		UserAccessPriveledge.stringForPriveledge(access)));
+        	}
+        } catch (SQLException e) {
+            throw new DaoException("findUserByUsernamePassword " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    freeConnection(conn);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("findUserByUsernamePassword" + e.getMessage());
+            }
+        }
+        return users.toArray(new User[users.size()]);
+    }
+    
     private final class UserDaoSchema {
+    	public static final String SELECT_ALL_USERS = "SELECT * FROM User";
     	public static final String SELECT_USER = "SELECT * FROM USER WHERE USERNAME = ? AND PASSWORD = ?";
     	public static final String INSERT_USER = "INSERT INTO User VALUES(DEFAULT, ?, ?, ?, ?, ?)";
     }

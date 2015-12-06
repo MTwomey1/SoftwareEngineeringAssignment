@@ -29,6 +29,8 @@ public class FrontController extends HttpServlet {
 	private static final String NEWS_FEED = "NewsFeed";
 	private static final String CREATE_USER = "CreateUser";
 	private static final String VIEW_USER_PROFILE = "ViewUserProfile";
+	private static final String BAN_USER = "BanUser";
+	private static final String SHOW_ALL_USERS = "ShowAllUsers";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -89,8 +91,16 @@ public class FrontController extends HttpServlet {
 			break;
 		case CREATE_USER:
 			commandType = CommandType.CREATE_USER_COMMAND;
+			break;
 		case VIEW_USER_PROFILE:
 			commandType = CommandType.USER_PROFILE_COMMAND;
+			break;
+		case BAN_USER:
+			commandType = CommandType.BAN_USER_COMMAND;
+			break;
+		case SHOW_ALL_USERS:
+			commandType = CommandType.SHOW_ALL_USERS_COMMAND;
+			break;
 		default:
 			break;
 		}
@@ -106,26 +116,6 @@ public class FrontController extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-	}
-
-	//	if (!isUserLoggedIn(request.getSession())){
-	//		forwardToJsp = "/loginFailure.jsp";
-	//		forwardToPage(request, response, forwardToJsp);
-	//		return;
-	//	}
-
-
-	/**
-	 * Checks to see if the user is already logged in.
-	 * @param session The session used to check if the user is logged in
-	 * @return True: User is logged in. False: User is not logged in.
-	 * */
-	private boolean isUserLoggedIn(HttpSession session) {
-		if (session.getId() != session.getAttribute("loggedSessionId")) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 
