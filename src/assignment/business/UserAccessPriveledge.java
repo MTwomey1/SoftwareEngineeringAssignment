@@ -1,7 +1,7 @@
 package assignment.business;
 
 public enum UserAccessPriveledge {
-	GUEST, MEMBER, MODERATOR, CONTENT_MANAGER;
+	GUEST, MEMBER, MODERATOR, CONTENT_MANAGER, BANNED;
 	
 	
 	
@@ -11,6 +11,7 @@ public enum UserAccessPriveledge {
 		case MEMBER: return "Member";
 		case MODERATOR: return "Moderator";
 		case CONTENT_MANAGER: return "ContentManager";
+		case BANNED: return "Banned";
 		default: return "";
 		}
 	}
@@ -28,6 +29,7 @@ public enum UserAccessPriveledge {
 		case "Member": return UserAccessPriveledge.MEMBER;
 		case "Moderator": return UserAccessPriveledge.MODERATOR;
 		case "ContentManager": return UserAccessPriveledge.CONTENT_MANAGER;
+		case "Banned": return UserAccessPriveledge.BANNED;
 		default: return null;
 		}
 	}

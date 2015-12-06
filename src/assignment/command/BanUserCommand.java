@@ -13,7 +13,10 @@ public class BanUserCommand implements Command {
 
 		try {
 			UserService service = new UserService();
-			request.setAttribute("users", service.getAllUsers());
+			String username = request.getParameter("usernametoban");
+			System.out.println("Username to ban" + username);
+			
+			service.banUser(username);
 			return "/banUserPage.jsp";
 		} catch (DaoException e) {
 			e.printStackTrace();

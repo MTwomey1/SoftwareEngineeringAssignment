@@ -13,6 +13,36 @@ import assignment.exceptions.DaoException;
 
 public class UserDao extends Dao {
 	
+	
+	/**Bans a user.
+	 * @param username The user name of user to ban.
+	 **/
+	public void banUser(String username) throws DaoException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		
+		try {
+			connection = this.getConnection();
+			statement = connection.prepareStatement(UserDaoSchema.BAN_USER);
+			statement.setString(1, "Banned");
+			statement.setString(2, username);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException("There was an error banning the user.");
+		} finally {
+			try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("Could not " + e.getMessage());
+            }
+		}
+	}
 	/**
 	 * Inserts a new user into the database.
 	 * 
@@ -167,5 +197,6 @@ public class UserDao extends Dao {
     	public static final String SELECT_ALL_USERS = "SELECT * FROM User";
     	public static final String SELECT_USER = "SELECT * FROM USER WHERE USERNAME = ? AND PASSWORD = ?";
     	public static final String INSERT_USER = "INSERT INTO User VALUES(DEFAULT, ?, ?, ?, ?, ?)";
+    	public static final String BAN_USER = "UPDATE User SET accesspriveledge = ? WHERE username = ?;";
     }
 }

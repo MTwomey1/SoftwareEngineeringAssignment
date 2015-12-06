@@ -49,12 +49,19 @@ public class CommandFactory extends AbstractCommandFactory {
 			return createGetArticlesForUserCommand();
 		case SHOW_ALL_USERS_COMMAND:
 			return createShowUsersCommand();
+		case BAN_USER_COMMAND:
+			return createBanUserCommand();
+			
 		default:
 			throw new 
 			CommandCreationException("Could not create command. Command was not recognised.");
 		}
 	}
 	
+	
+	private Command createBanUserCommand() {
+		return new BanUserCommand();
+	}
 	
 	private Command createLoginCommand() {
 		return new LoginUserCommand();

@@ -80,6 +80,11 @@ public class UserService implements LoginServiceRequest {
 		UserManager.setCurrentUser(user);
 	}
 	
+	public void banUser(String username) throws DaoException {
+		UserDao dao = new UserDao();
+		dao.banUser(username);
+	}
+	
 	
 	/**
 	 * A static inner class that will hold a record
